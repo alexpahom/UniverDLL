@@ -14,7 +14,7 @@
 //---------------------------- GOODS   CLASS ---------------------------------------
 //----------------------------------------------------------------------------------
 
-// Constructors
+// Конструкторы
 Good::Good() {};
 Good::Good(int id, std::string type, std::string model, std::string manufacturer) {
 	this->id = id;
@@ -23,13 +23,13 @@ Good::Good(int id, std::string type, std::string model, std::string manufacturer
 	this->manufacturer = manufacturer;
 };
 
-// Setters
+// Сеттеры
 void Good::setId(int id) { this->id = id; };
 void Good::setType(std::string type) { this->type = type; };
 void Good::setModel(std::string model) { this->model = model; };
 void Good::setManufacturer(std::string manufacturer) { this->manufacturer = manufacturer; };
 
-// Getters
+// Геттеры
 int Good::getId() { return id; };
 std::string Good::getType() { return type; };
 std::string Good::getModel() { return model; };
@@ -39,7 +39,7 @@ bool Good::operator < (const Good &other) const
 {
 	return id < other.id;
 }
-// Serialiation method
+// Метод сериализации
 template<class Archive>
 void Good::serialize(Archive &archive) {
 	archive(id, type, model, manufacturer);
@@ -51,21 +51,29 @@ void Good::serialize(Archive &archive) {
 template<typename ValueType>
 GoodIterator<ValueType>::GoodIterator(ValueType* p) : p(p) {};
 
+// Конструктор копирования
 template<typename ValueType>
 GoodIterator<ValueType>::GoodIterator(typename std::vector<ValueType>::iterator it) : p(it._Ptr) {};
 
+// Оператор логического равенства двух итераторов
 template<typename ValueType>
 bool GoodIterator<ValueType>::operator==(GoodIterator<ValueType> const &other) const { return p == other.p; };
 
+// Оператор неравенства двух итераторов
 template<typename ValueType>
 bool GoodIterator<ValueType>::operator!=(GoodIterator<ValueType> const &other) const { return p != other.p; };
 
+
+// Доступ к объекту
 template<typename ValueType>
 ValueType GoodIterator<ValueType>::operator*() const { return *p; };
 
+// Доступ к членам объекта
 template<typename ValueType>
 ValueType* const GoodIterator<ValueType>::operator->() const { return &(*p); };
 
+
+// Перемещение итератора
 template<typename ValueType>
 GoodIterator<ValueType> &GoodIterator<ValueType>::operator++() {
 	++p;
@@ -81,11 +89,13 @@ GoodContainer::iterator GoodContainer::begin() { return iterator(goods.begin());
 GoodContainer::iterator GoodContainer::end() { return iterator(goods.end()); };
 std::vector<Good> GoodContainer::getGoods() { return sortedGoods(); };
 
+// Добавление элемента в конец коллекции
 GoodContainer* GoodContainer::add(Good good) {
 	goods.push_back(good);
 	return this;
 };
 
+// Удаление элемента коллекции по значению ID
 GoodContainer* GoodContainer::drop_by_id(int id)
 {
 	int index = 0;
@@ -99,18 +109,22 @@ GoodContainer* GoodContainer::drop_by_id(int id)
 	return this;
 };
 
+// Очистка контейнера
 GoodContainer* GoodContainer::clear()
 {
 	goods.clear();
 	return this;
 }
 
+// Поиск элемента коллекции по ID
 Good GoodContainer::find_by_id(int id)
 {
 	for (iterator it = begin(); it != end(); ++it) {
 		if (it->getId() == id) return *it;
 	}
 }
+
+// Проверка, существует ли указанный ID в коллекции
 bool GoodContainer::is_id_unique(int id)
 {
 	for (iterator it = begin(); it != end(); ++it) {
@@ -119,6 +133,7 @@ bool GoodContainer::is_id_unique(int id)
 	return true;
 }
 
+// Сортировка коллекции по ID
 std::vector<Good> GoodContainer::sortedGoods()
 {
 	std::vector<Good> sorted = goods;
@@ -126,25 +141,27 @@ std::vector<Good> GoodContainer::sortedGoods()
 	return sorted;
 };
 
+// Сохранение коллекции в файл
 void GoodContainer::save() {
 	const char* filename = "goods";
 	std::ofstream out(filename, std::ios::binary);
+	// Создание архива для сериализации
 	cereal::BinaryOutputArchive oarchive(out);
 
 	for (GoodIterator<Good> it = begin(); it != end(); ++it) {
 		oarchive(*it);
-		//out.write((char*)&(*it), sizeof(Good));
 	}
 	out.close();
 }
 
+// Загрузка коллекции из файла 
 void GoodContainer::load() {
 	const char* filename = "goods";
 	std::ifstream in(filename, std::ios::binary);
+	// Создания архива для десериализаци
 	cereal::BinaryInputArchive iarchive(in);
 
 	Good good;
-	//while (in.read((char*)&good, sizeof(Good)))
 	while (in) {
 		try {
 			iarchive(good);

@@ -7,24 +7,24 @@ class Good
 	int id;
 	std::string type, model, manufacturer;
 public:
-	// Constructors
+	// Конструкторы
 	Good();
 	Good(int id, std::string type, std::string model, std::string manufacturer);
 
-	// Setters
+	// Сеттеры
 	void setId(int id);
 	void setType(std::string type);
 	void setModel(std::string model);
 	void setManufacturer(std::string manufacturer);
 
-	// Getters
+	// Геттеры
 	int getId();
 	std::string getType();
 	std::string getModel();
 	std::string getManufacturer();
 	bool operator < (const Good &other) const;
 
-	// Serialization method
+	// Метод сериализации
 	template<class Archive>
 	void serialize(Archive &archive);
 };
@@ -39,6 +39,7 @@ public:
 	GoodIterator(ValueType* p);
 	GoodIterator(typename std::vector<ValueType>::iterator it);
 
+	// Определение операторов
 	bool operator==(GoodIterator<ValueType> const &other) const;
 	bool operator!=(GoodIterator<ValueType> const &other) const;
 	ValueType operator*() const;

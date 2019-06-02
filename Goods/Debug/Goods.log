@@ -1,7 +1,7 @@
 ﻿  stdafx.cpp
   dllmain.cpp
   Goods.cpp
-  Generating Code...
-c:\users\pakhomchikai\documents\visual studio 2017\projects\kursova9dll\goods\goods\goods.cpp(113): warning C4715: 'GoodContainer::find_by_id': not all control paths return a value
-     Creating library C:\Users\pakhomchikai\Documents\Visual Studio 2017\Projects\Kursova9CLR\Wrapper\Debug\Goods.lib and object C:\Users\pakhomchikai\Documents\Visual Studio 2017\Projects\Kursova9CLR\Wrapper\Debug\Goods.exp
-  Goods.vcxproj -> C:\Users\pakhomchikai\Documents\Visual Studio 2017\Projects\Kursova9CLR\Wrapper\Debug\Goods.dll
+  Создание кода...
+e:\универ\2 курс 4 сем\языки программиования\курсовая\kursova9dll\goods\goods\goods.cpp(125): warning C4715: GoodContainer::find_by_id: значение возвращается не при всех путях выполнения
+     Создается библиотека E:\Универ\2 курс 4 сем\Языки программиования\Курсовая\Kursova9CLR\Wrapper\Debug\Goods.lib и объект E:\Универ\2 курс 4 сем\Языки программиования\Курсовая\Kursova9CLR\Wrapper\Debug\Goods.exp
+  Goods.vcxproj -> E:\Универ\2 курс 4 сем\Языки программиования\Курсовая\Kursova9CLR\Wrapper\Debug\Goods.dll
